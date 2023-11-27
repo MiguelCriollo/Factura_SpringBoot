@@ -7,7 +7,7 @@ import jakarta.persistence.*
 class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null;
-    var description: String? = null;
+    var descripction: String? = null;
     var brand: String? = null;
     var price: Double? = null;
     var stock: Int? = null;
