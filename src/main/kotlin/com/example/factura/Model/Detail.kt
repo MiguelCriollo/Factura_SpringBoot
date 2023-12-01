@@ -11,7 +11,7 @@ class Detail {
     var quantity: Int? = null;
     var price: Double? = null;
     @JoinColumn(name = "invoice_id")
-    var invoice_id: Long? = null;
+    var invoiceId: Long? = null;
     @JoinColumn(name = "product_id")
-    var product_id: Long? = null;
+    var productId: Long? = null;
 }

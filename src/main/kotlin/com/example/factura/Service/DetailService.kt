@@ -2,6 +2,7 @@ package com.example.factura.Service
 
 import com.example.factura.Model.Client
 import com.example.factura.Model.Detail
+import com.example.factura.Model.Invoice
 import com.example.factura.Repository.ClientRepository
 import com.example.factura.Repository.DetailRepository
 import com.example.factura.Repository.InvoiceRepository
@@ -20,14 +21,18 @@ class DetailService {
     @Autowired
     lateinit var invoiceRepository: InvoiceRepository
 
-
+    //-------------Para Queries--------------
+    fun bestProductSeller(value:Long):List<*>{
+        return detailRepository.bestProductSeller(value)
+    }
+    //---------------------------------------
     fun list ():List<Detail>{
         return detailRepository.findAll()
     }
     fun save(modelo: Detail): Detail{
-        productRepository.findById(modelo.product_id)
-            ?:throw Exception("Id del cliente no existe")
-        invoiceRepository.findById(modelo.invoice_id)
+        productRepository.findById(modelo.productId)
+            ?:throw Exception("Id del Producto no existe")
+        invoiceRepository.findById(modelo.invoiceId)
             ?:throw Exception("Id del Invoice no existe")
         try{
             return detailRepository.save(modelo)

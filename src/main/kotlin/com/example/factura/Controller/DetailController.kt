@@ -13,7 +13,14 @@ import org.springframework.web.bind.annotation.*
 class DetailController {
     @Autowired
     lateinit var detailService: DetailService
+    //---------------Queries------------
 
+    @GetMapping("/bestSeller/{value}")
+    fun listBestSeller (@PathVariable value:Long): ResponseEntity<*> {
+        return ResponseEntity(detailService.bestProductSeller(value),HttpStatus.OK)
+    }
+
+    //--------------------
     @GetMapping
     fun list (): ResponseEntity<*> {
         var celularResponse=detailService.list()

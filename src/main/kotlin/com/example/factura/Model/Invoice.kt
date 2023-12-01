@@ -1,6 +1,7 @@
 package com.example.factura.Model
 
 import jakarta.persistence.*
+import org.springframework.boot.context.properties.bind.DefaultValue
 import java.time.LocalDate
 
 @Entity
@@ -10,7 +11,9 @@ class Invoice {
     var id: Long? = null;
     var code: String? = null;
     @Column(name="create_at")
-    var createdAt: LocalDate? = null;
-    var total: Int? = null;
-    var client_id: Long? = null;
+    var createdAt: LocalDate? = LocalDate.now();
+    var total: Long? = null;
+    @Column(name="client_id")
+    var clientId: Long? = null;
+
 }

@@ -19,8 +19,18 @@ class InvoiceController {
         var celularResponse=invoiceService.list()
         return ResponseEntity.ok(mapOf("Felony" to "Sex Offender","status" to "success", "data" to celularResponse))
     }
+    @GetMapping("/filter-total/{value}")
+    fun listsTotals (@PathVariable value:Long): ResponseEntity<*> {
+        return ResponseEntity(invoiceService.listTotal(value),HttpStatus.OK)
+    }
+    @GetMapping("/highestPriceClient/{value}")
+    fun clientsHighestTotal (@PathVariable value:Long): ResponseEntity<*> {
+        return ResponseEntity(invoiceService.clientsHighestTotal(value),HttpStatus.OK)
+    }
+
     @PostMapping
     fun save (@RequestBody modelo: Invoice): ResponseEntity<Invoice> {
+        println(modelo);
         return ResponseEntity(invoiceService.save(modelo), HttpStatus.OK)
     }
     @PutMapping

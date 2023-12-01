@@ -16,13 +16,19 @@ class InvoiceService {
     @Autowired
     lateinit var invoiceRepository: InvoiceRepository
 
+    fun listTotal(value:Long):List<Invoice>{
+        return invoiceRepository.filterTotal(value)
+    }
+    fun clientsHighestTotal(value:Long):List<*>{
+        return invoiceRepository.clientsHighestTotal(value)
+    }
     fun list ():List<Invoice>{
         return invoiceRepository.findAll()
     }
     fun save(modelo: Invoice): Invoice{
-        clientRepository.findById(modelo.client_id)
+        clientRepository.findById(modelo.clientId)
             ?:throw Exception("Id del cliente no existe")
-
+        modelo.createdAt?:throw Exception("La fecha de creacion no debe ser incluida, o en caso de necesitarlo debe ser de formato 'year-month-day'")
         try{
             return invoiceRepository.save(modelo)
         }
