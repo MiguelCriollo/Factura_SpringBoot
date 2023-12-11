@@ -21,6 +21,9 @@ class DetailService {
     @Autowired
     lateinit var invoiceRepository: InvoiceRepository
 
+    @Autowired
+    lateinit var productService: ProductService;
+
     //-------------Para Queries--------------
     fun bestProductSeller(value:Long):List<*>{
         return detailRepository.bestProductSeller(value)
@@ -30,11 +33,14 @@ class DetailService {
         return detailRepository.findAll()
     }
     fun save(modelo: Detail): Detail{
-        productRepository.findById(modelo.productId)
+        var productToUpdate=productRepository.findById(modelo.productId)
             ?:throw Exception("Id del Producto no existe")
         invoiceRepository.findById(modelo.invoiceId)
             ?:throw Exception("Id del Invoice no existe")
         try{
+            productToUpdate.apply {
+                stock -= modelo.quantity;
+            }
             return detailRepository.save(modelo)
         }
         catch (ex:Exception){

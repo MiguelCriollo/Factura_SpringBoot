@@ -8,7 +8,7 @@ class Detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null;
-    var quantity: Int? = null;
+    var quantity: Int = 0;
     var price: Double? = null;
     @JoinColumn(name = "invoice_id")
     var invoiceId: Long? = null;

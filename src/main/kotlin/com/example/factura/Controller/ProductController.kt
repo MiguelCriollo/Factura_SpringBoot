@@ -14,11 +14,18 @@ import org.springframework.web.bind.annotation.*
 class ProductController {
     @Autowired
     lateinit var productService: ProductService
-
-    @GetMapping
+    @GetMapping()
+    fun listAll(modelo: Product):ResponseEntity<*>{
+        return ResponseEntity(productService.getAll(modelo),HttpStatus.OK)
+    }
+    @GetMapping("/pageable")
     fun list (model:Product, pageable: Pageable):ResponseEntity<*>{
         val response= productService.list(pageable,model)
         return ResponseEntity(response, HttpStatus.OK)
+    }
+    @GetMapping("/listDto")
+    fun listDt ():ResponseEntity<*>{
+        return ResponseEntity(productService.listDt(), HttpStatus.OK)
     }
     @PostMapping
     fun save (@RequestBody modelo: Product): ResponseEntity<Product> {
@@ -28,10 +35,13 @@ class ProductController {
     fun update (@RequestBody modelo:Product): ResponseEntity<Product> {
         return ResponseEntity(productService.update(modelo), HttpStatus.OK)
     }
+    /*
     @PatchMapping
     fun updateName (@RequestBody modelo:Product): ResponseEntity<Product> {
-        return ResponseEntity(productService.updateName(modelo), HttpStatus.OK)
+        return ResponseEntity(productService.updateStock(modelo), HttpStatus.OK)
     }
+    */
+
 
     @GetMapping("/{id}")
     fun listById (@PathVariable("id") id: Long): ResponseEntity<*> {

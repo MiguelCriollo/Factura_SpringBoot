@@ -10,5 +10,5 @@ class Product {
     var descripction: String? = null;
     var brand: String? = null;
     var price: Double? = null;
-    var stock: Int? = null;
+    var stock: Int = 0;
 }
