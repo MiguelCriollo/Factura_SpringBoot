@@ -9,7 +9,7 @@ class Detail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null;
     var quantity: Int = 0;
-    var price: Double? = null;
+    var price: Double = 0.0;
     @JoinColumn(name = "invoice_id")
     var invoiceId: Long? = null;
     @JoinColumn(name = "product_id")

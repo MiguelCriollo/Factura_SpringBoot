@@ -1,5 +1,6 @@
 package com.example.factura.Repository
 
+import com.example.factura.Model.Detail
 import com.example.factura.Model.Invoice
 import jakarta.persistence.NamedNativeQuery
 import org.springframework.data.jpa.repository.JpaRepository

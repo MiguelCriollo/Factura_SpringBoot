@@ -1,8 +1,10 @@
 package com.example.factura.Service
 
+import com.example.factura.Mapper.ProductMapper
 import com.example.factura.Model.Client
 import com.example.factura.Model.Detail
 import com.example.factura.Model.Invoice
+import com.example.factura.Model.Product
 import com.example.factura.Repository.ClientRepository
 import com.example.factura.Repository.DetailRepository
 import com.example.factura.Repository.InvoiceRepository
@@ -37,23 +39,43 @@ class DetailService {
             ?:throw Exception("Id del Producto no existe")
         invoiceRepository.findById(modelo.invoiceId)
             ?:throw Exception("Id del Invoice no existe")
+
+        var invoiceToCalculate=invoiceRepository.findById(modelo.invoiceId);
+        var allDetailsList: List<Detail> =detailRepository.getDetailsFromInvoice(modelo.invoiceId)
+        var totalPrice:Double=0.0;
+        allDetailsList.forEach{element: Detail ->
+            totalPrice=element.price*element.quantity;
+        }
         try{
             productToUpdate.apply {
                 stock -= modelo.quantity;
+            }
+            invoiceToCalculate?.apply {
+                total=totalPrice;
             }
             return detailRepository.save(modelo)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
+
     }
 
     fun update(modelo: Detail): Detail{
+        var productToUpdate=productRepository.findById(modelo.productId)
+            ?:throw Exception("Id del Producto no existe")
+        invoiceRepository.findById(modelo.invoiceId)
+            ?:throw Exception("Id del Invoice no existe")
+        var oldQuantity= detailRepository.findById(modelo.id)?.quantity;
         try {
 
             detailRepository.findById(modelo.id)
                 ?: throw Exception("ID no existe")
-
+            if (oldQuantity != null) {
+                productToUpdate.apply {
+                    stock += oldQuantity - modelo.quantity;
+                }
+            }
             return detailRepository.save(modelo)
         }
         catch (ex:Exception){
