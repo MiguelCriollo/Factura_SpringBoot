@@ -9,6 +9,8 @@ interface DetailRepository  : JpaRepository<Detail, Long?> {
     fun findById (id: Long?): Detail?
     @Query(nativeQuery = true)
     fun bestProductSeller(value:Long): List<*>
-    @Query(nativeQuery = true)
-    fun getDetailsFromInvoice(value:Long?): List<Detail>
+    //@Query(nativeQuery = true)
+    //fun getDetailsFromInvoice(value:Long?): List<Detail>
+
+    fun findByInvoiceId(invoiceId:Long?): List<Detail>
 }

@@ -23,7 +23,7 @@ class ClientController {
     fun save (@RequestBody modelo: Client): ResponseEntity<Client> {
         return ResponseEntity(clientService.save(modelo), HttpStatus.OK)
     }
-    @PutMapping
+    @PutMapping()
     fun update (@RequestBody modelo:Client): ResponseEntity<Client> {
         return ResponseEntity(clientService.update(modelo), HttpStatus.OK)
     }
